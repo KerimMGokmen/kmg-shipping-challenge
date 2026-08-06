@@ -1,0 +1,42 @@
+services:
+  db:
+    build: ./db
+    container_name: kmg-db
+    image: kmg-db:1.0
+    environment:
+      POSTGRES_USER: kmg_admin
+      POSTGRES_PASSWORD: kmg_pw123
+      POSTGRES_DB: kmg_milestone2
+    networks:
+      - kmg-net
+
+  api:
+    build: ./api
+    container_name: kmg-api
+    image: kmg-api:1.0
+    environment:
+      DB_HOST: kmg-db
+      DB_NAME: kmg_milestone2
+      DB_USER: kmg_admin
+      DB_PASSWORD: kmg_pw123
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - kmg-net
+
+  frontend:
+    build: ./frontend
+    container_name: kmg-frontend
+    image: kmg-frontend:1.0
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - kmg-net
+
+networks:
+  kmg-net:
+    name: kmg-net

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kmg-frontend-deploy
+  namespace: kmg-ns
+  labels:
+    app: kmg-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kmg-frontend
+  template:
+    metadata:
+      labels:
+        app: kmg-frontend
+    spec:
+      containers:
+        - name: kmg-frontend
+          image: kmg-frontend:1.1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80

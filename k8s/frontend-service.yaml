@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kmg-frontend-svc
+  namespace: kmg-ns
+spec:
+  type: ClusterIP
+  selector:
+    app: kmg-frontend
+  ports:
+    - port: 80
+      targetPort: 80

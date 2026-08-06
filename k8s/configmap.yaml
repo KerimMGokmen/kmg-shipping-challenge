@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kmg-db-config
+  namespace: kmg-ns
+data:
+  DB_HOST: "kmg-db-svc"
+  DB_NAME: "kmg_milestone2"
+  DB_USER: "kmg_admin"
+  POSTGRES_DB: "kmg_milestone2"
+  POSTGRES_USER: "kmg_admin"

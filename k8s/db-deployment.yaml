@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kmg-db-deploy
+  namespace: kmg-ns
+  labels:
+    app: kmg-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kmg-db
+  template:
+    metadata:
+      labels:
+        app: kmg-db
+    spec:
+      containers:
+        - name: kmg-db
+          image: kmg-db:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: kmg-db-config
+            - secretRef:
+                name: kmg-db-secret

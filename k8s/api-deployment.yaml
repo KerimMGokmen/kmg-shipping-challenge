@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kmg-api-deploy
+  namespace: kmg-ns
+  labels:
+    app: kmg-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kmg-api
+  template:
+    metadata:
+      labels:
+        app: kmg-api
+    spec:
+      containers:
+        - name: kmg-api
+          image: kmg-api:1.2
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: kmg-db-config
+            - secretRef:
+                name: kmg-db-secret
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 3
