@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kmg-api
 spec:
-  replicas: 5
+  replicas: 4
   selector:
     matchLabels:
       app: kmg-api
